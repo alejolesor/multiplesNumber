@@ -8,3 +8,5 @@ Trafilea Api
 4) Also it's possible to execute in visual code with the following option: 
 Run start debugging.
 5) download the postman collection to test the endpoints.
+
+[Uploading Trafilea.postman_collection.json…]()
