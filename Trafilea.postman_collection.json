@@ -1,0 +1,59 @@
+{
+	"info": {
+		"_postman_id": "1fa7ad90-2e46-4a26-b8e5-2cc5f73a80aa",
+		"name": "Trafilea",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "1805527",
+		"_collection_link": "https://orange-sunset-35929.postman.co/workspace/Team-Workspace~b4ffa4f3-dad5-486d-8823-c17bf4e7d75d/collection/1805527-1fa7ad90-2e46-4a26-b8e5-2cc5f73a80aa?action=share&source=collection_link&creator=1805527"
+	},
+	"item": [
+		{
+			"name": "get numbers with type",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3000/multiples/100"
+			},
+			"response": []
+		},
+		{
+			"name": "save number",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": "http://localhost:3000/multiples/add/5"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Collection",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:3000/multiples/multiplesCollection"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Value by num",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:3000/multiples/value/3"
+			},
+			"response": []
+		}
+	]
+}
