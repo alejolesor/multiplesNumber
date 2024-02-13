@@ -3,22 +3,22 @@ package usecases
 import "errors"
 
 type ServicesMultipliers interface {
-	GetMultipliers(num int) []multiplesByType
-	SaveMultiplier(num int)
-	GetMultiplierCollection() []multiplesByType
-	GetValueByNumber(num int) (multiplesByType, error)
+	GetMultipliers(num int) []MultiplesByType
+	SaveMultiplier(num int) bool
+	GetMultiplierCollection() []MultiplesByType
+	GetValueByNumber(num int) (MultiplesByType, error)
 }
 
 type Multipliers struct {
 	typeByMultiple []Type
 }
 
-type multiplesByType struct {
+type MultiplesByType struct {
 	Num  int
 	Type string
 }
 
-var multipliersCollection = []multiplesByType{}
+var multipliersCollection = []MultiplesByType{}
 
 func NewServiceMultipliers(typeByMultiple []Type) *Multipliers {
 	return &Multipliers{
@@ -27,9 +27,9 @@ func NewServiceMultipliers(typeByMultiple []Type) *Multipliers {
 }
 
 // return numbers count with type by number
-func (m *Multipliers) GetMultipliers(num int) []multiplesByType {
+func (m *Multipliers) GetMultipliers(num int) []MultiplesByType {
 
-	var arrMultiples []multiplesByType
+	var arrMultiples []MultiplesByType
 
 	for i := 1; i <= num; i++ {
 		multiple := m.CalculateTypeByNumber(i)
@@ -41,19 +41,21 @@ func (m *Multipliers) GetMultipliers(num int) []multiplesByType {
 }
 
 // Save Number with type
-func (m *Multipliers) SaveMultiplier(num int) {
+func (m *Multipliers) SaveMultiplier(num int) bool {
 	multiple := m.CalculateTypeByNumber(num)
 	multipliersCollection = append(multipliersCollection, multiple)
+
+	return true
 
 }
 
 // Get All collection
-func (m *Multipliers) GetMultiplierCollection() []multiplesByType {
+func (m *Multipliers) GetMultiplierCollection() []MultiplesByType {
 	return multipliersCollection
 }
 
 // Get Value by number
-func (m *Multipliers) GetValueByNumber(num int) (multiplesByType, error) {
+func (m *Multipliers) GetValueByNumber(num int) (MultiplesByType, error) {
 
 	for i := 0; i < len(multipliersCollection); i++ {
 		if num == multipliersCollection[i].Num {
@@ -61,24 +63,24 @@ func (m *Multipliers) GetValueByNumber(num int) (multiplesByType, error) {
 		}
 	}
 
-	return multiplesByType{}, errors.New("not found")
+	return MultiplesByType{}, errors.New("not found")
 }
 
 // POC
-func (m *Multipliers) CalculateTypeByNumber(num int) multiplesByType {
+func (m *Multipliers) CalculateTypeByNumber(num int) MultiplesByType {
 
 	types := []Type{&Type3{}, &Type1{}, &Type2{}}
 
-	mult := multiplesByType{}
+	mult := MultiplesByType{}
 
 	for _, t := range types {
 		if t.Match(num) {
 			v := t.Name()
-			mult = multiplesByType{Num: num, Type: v}
+			mult = MultiplesByType{Num: num, Type: v}
 			break
 
 		}
-		mult = multiplesByType{Num: num, Type: "NA"}
+		mult = MultiplesByType{Num: num, Type: "NA"}
 
 	}
 
