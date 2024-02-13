@@ -9,4 +9,4 @@ Trafilea Api
 Run start debugging.
 5) download the postman collection to test the endpoints.
 
-[Uploading Trafilea.postman_collection.json…]()
+
