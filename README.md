@@ -8,6 +8,7 @@ Trafilea Api
 4) Also it's possible to execute in visual code with the following option: 
 Run start debugging.
 5) download the postman collection to test the endpoints attached in the repo.
+   https://github.com/alejolesor/multiplesNumber/blob/main/Trafilea.postman_collection.json
 
 ENDPOINT: 
 #### - get numbers with type
