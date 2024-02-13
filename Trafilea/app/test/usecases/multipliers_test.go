@@ -17,7 +17,7 @@ func TestSomething(t *testing.T) {
 var serviceMock mocks.ServicesMultipliers
 var typeMock mocks.Type
 
-func TestDeposit_ok(t *testing.T) {
+func TestMultiples(t *testing.T) {
 
 	tests := []struct {
 		name    string
@@ -46,8 +46,10 @@ func TestDeposit_ok(t *testing.T) {
 
 			usecase := usecases.NewServiceMultipliers(multipleOperations)
 
+			//when
 			result := usecase.SaveMultiplier(3)
 
+			//then
 			assert.True(t, result, "True is true!")
 
 		})
