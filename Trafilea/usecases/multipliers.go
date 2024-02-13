@@ -1,6 +1,9 @@
 package usecases
 
-import "errors"
+import (
+	"errors"
+	"sync"
+)
 
 type ServicesMultipliers interface {
 	GetMultipliers(num int) []MultiplesByType
@@ -29,14 +32,26 @@ func NewServiceMultipliers(typeByMultiple []Type) *Multipliers {
 // return numbers count with type by number
 func (m *Multipliers) GetMultipliers(num int) []MultiplesByType {
 
+	test := make(chan []MultiplesByType)
 	var arrMultiples []MultiplesByType
+	var wg sync.WaitGroup
 
-	for i := 1; i <= num; i++ {
-		multiple := m.CalculateTypeByNumber(i)
-		arrMultiples = append(arrMultiples, multiple)
-	}
+	wg.Add(num)
 
-	return arrMultiples
+	go func() {
+		defer wg.Done()
+		for i := 1; i <= num; i++ {
+			multiple := m.CalculateTypeByNumber(i)
+			arrMultiples = append(arrMultiples, multiple)
+		}
+
+		test <- arrMultiples
+		wg.Wait()
+		close(test)
+
+	}()
+
+	return <-test
 
 }
 

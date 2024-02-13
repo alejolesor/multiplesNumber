@@ -3,21 +3,16 @@ package usecases
 import (
 	"TRAFILEA/app/test/mocks"
 	"TRAFILEA/usecases"
+	"errors"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
-func TestSomething(t *testing.T) {
-
-	assert.True(t, true, "True is true!")
-
-}
-
 var serviceMock mocks.ServicesMultipliers
 var typeMock mocks.Type
 
-func TestMultiples(t *testing.T) {
+func TestSaveMultiples(t *testing.T) {
 
 	tests := []struct {
 		name    string
@@ -26,10 +21,10 @@ func TestMultiples(t *testing.T) {
 	}{
 		{
 			//Given
-			name: "Success Method Deposit",
+			name: "Success Method save multiplier",
 			mock: func() {
-				serviceMock.On("SaveMultiplier", 3).Return(nil)
-				//mockRepositoryAccount.On("Get", "francisco").Return(&accountMap, nil)
+				typeMock.On("Match", 3).Return(true)
+				typeMock.On("Name").Return("1")
 			},
 			wantErr: false,
 		},
@@ -54,5 +49,96 @@ func TestMultiples(t *testing.T) {
 
 		})
 	}
+
+}
+
+func TestGetMultiplier(t *testing.T) {
+
+	tests := []struct {
+		name    string
+		mock    func()
+		wantErr bool
+	}{
+		{
+			//Given
+			name: "Success Method Get multiplier",
+			mock: func() {
+
+			},
+			wantErr: false,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+
+			serviceMock = mocks.ServicesMultipliers{}
+			typeMock = mocks.Type{}
+
+			tt.mock()
+
+			multipleOperations := usecases.NewType()
+
+			usecase := usecases.NewServiceMultipliers(multipleOperations)
+
+			//when
+			result := usecase.GetMultipliers(10)
+
+			//then
+			assert.NotNil(t, result, "not nil")
+
+		})
+	}
+
+}
+
+func TestGetCollections(t *testing.T) {
+
+	serviceMock = mocks.ServicesMultipliers{}
+
+	//Given
+	multiplesByType := []usecases.MultiplesByType{{Num: 3, Type: "3"}}
+
+	serviceMock.On("GetMultiplierCollection").Return(multiplesByType, nil)
+
+	//when
+	result := serviceMock.GetMultiplierCollection()
+
+	//then
+	assert.Equal(t, multiplesByType, result)
+
+}
+
+func TestGetValueByNumber(t *testing.T) {
+
+	serviceMock = mocks.ServicesMultipliers{}
+
+	//Given
+	multiplesByType := usecases.MultiplesByType{Num: 3, Type: "1"}
+
+	serviceMock.On("GetValueByNumber", 3).Return(multiplesByType, nil)
+
+	//when
+	result, _ := serviceMock.GetValueByNumber(3)
+
+	//then
+	assert.Equal(t, multiplesByType, result, "not nil")
+
+}
+
+func TestGetValueByNumberError(t *testing.T) {
+
+	serviceMock = mocks.ServicesMultipliers{}
+
+	//Given
+	multiplesByType := usecases.MultiplesByType{}
+
+	serviceMock.On("GetValueByNumber", 3).Return(multiplesByType, errors.New("not found"))
+
+	//when
+	_, err := serviceMock.GetValueByNumber(3)
+
+	//then
+	assert.Error(t, err)
 
 }
