@@ -10,7 +10,7 @@ Run start debugging.
 5) download the postman collection to test the endpoints attached in the repo.
 
 ENDPOINT: 
-#get numbers with type
+# get numbers with type
 With this endpoint you can get the numbers list with type, this receives a parameter with the count that you require:
 
 ex: http://localhost:3000/multiples/100
